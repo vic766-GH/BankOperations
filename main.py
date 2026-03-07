@@ -20,7 +20,7 @@
 # print(get_mask_card_number('7000792289606361'))
 # print(get_mask_account('73654108430135874305'))
 
-from src.widget import mask_account_card
+from src.widget import mask_account_card, get_date
 
 input_data = (
     "Maestro 1596837868705199",
@@ -36,3 +36,4 @@ input_data = (
 if __name__ == "__main__":
     for input_string in input_data:
         print(mask_account_card(input_string))
+    print(get_date('2024-03-11T02:26:18.671407'))
