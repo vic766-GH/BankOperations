@@ -1,4 +1,24 @@
-# processing.py:
+# BankOperatins
+***это серверная часть виджета банковских операций***
+
+***1. masks.py:***
+
+**get_mask_card_number**(card_number: str) -> str:
+    - принимает на вход номер карты и возвращает ее маску
+**get_mask_account**(card_number: str) -> str:
+    - принимает на вход номер карты и возвращает её краткую маску
+
+
+***2. widget.py:***
+
+**mask_account_card**(card_info: str) -> str:
+    - Принимает информацию о карте или счёте. Возвращает замаскированную строку
+
+**get_date**(date_string: str) -> str:
+    - Принимает строку с текущей датой и возвращает строку в формате 'ДД.ММ.ГГГГ'
+
+
+***3. processing.py:***
 
 **filter_by_state**(input_dict_list: list, state: str = 'EXECUTED') -> list:
     - Функция принимает на вход список словарей по банковским операциям и возвращает новый список,
