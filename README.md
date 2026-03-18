@@ -27,3 +27,11 @@
 <font size="3">**sort_by_date**(dict_list_input: list, descending_order: bool = True) -> list :</font>
     - Функция принимает на вход список словарей по банковским операциям и возвращает новый список, отсортированный в заданном вторым параметром порядке
 
+<font size="4"><span style="color: green">***Все модули покрыты тестами***</font>
+
+
+Coverage report: 100% 
+
+{coverage.py v7.13.4}, created at 2026-03-18 20:13 +0500
+
+[index.html](htmlcov/index.html)
