@@ -34,4 +34,3 @@ Coverage report: 100%
 
 {coverage.py v7.13.4}, created at 2026-03-18 20:13 +0500
 
-[index.html](htmlcov/index.html)
