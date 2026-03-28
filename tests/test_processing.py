@@ -8,8 +8,8 @@ from src.processing import filter_by_state, sort_by_date
     [
         ("unsorted_list", "EXECUTED", "executed_select_list"),  # корректные данные
         ("unsorted_list", "CANCELED", "canceled_select_list"),  # корректные данные
-        ("one_operation_list", "CANCELED", "empty_list"),  # не корректные данные - отсутствует заданный тип операции
-        ([], "CANCELED", []),  # не корректные данные - пустые словари
+        ("one_operation_list", "CANCELED", "empty_list"),  # некорректные данные - отсутствует заданный тип операции
+        ([], "CANCELED", []),  # некорректные данные - пустые словари
         ([], "", []),  # некорректные данные - отсутствует критерий операции
     ],
 )
