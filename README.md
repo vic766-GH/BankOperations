@@ -31,6 +31,23 @@
     - Принимает на вход список словарей по банковским операциям и возвращает новый список,
 отсортированный в заданном вторым параметром порядке
 
+
+#### <font size="4">***4. <u>generators.py:</u>***</font>
+
+<font size="3">**filter_by_currency**(list_of_dicts: list, currency: str) -> Generator[dict, None,
+None]:</font>
+    - Принимает на вход список словарей, представляющих транзакции и возвращает итератор,
+    который поочередно выдает транзакции, где валюта операции соответствует заданной
+
+<font size="3">**transaction_descriptions**(list_of_dicts: list) -> Generator[str, None, None]:</font>
+    - Принимает список словарей с транзакциями и возвращает описание каждой операции по очереди
+
+<font size="3">**card_number_generator**(first_num: int, last_num: int) -> Generator[str, None,
+</font>Any]:</font>
+     - Принимает начальное и конечное значения и выдает номера банковских карт в формате
+    XXXX XXXX XXXX XXXX, где X — цифра номера карты. Генератор может сгенерировать номера
+    карт в заданном диапазоне от 0000 0000 0000 0001 до 9999 9999 9999 9999
+
 ### <font size="4"><span style="color: green">***Тестирование***</font>
 
 #### <font size="4">***1. <u>test_masks.py:</u>***</font>
