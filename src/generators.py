@@ -26,9 +26,8 @@ def card_number_generator(first_num: int, last_num: int) -> Generator[str, None,
 
     i = first_num
 
-    if first_num > last_num:
-        print("\n Начальный номер больше конечного")
-        return "\n Начальный номер больше конечного"
+    if first_num >= last_num:
+        return []
 
     while i <= last_num:
         string_out = f"{str(i):>016}"

@@ -1,9 +1,10 @@
 from typing import Generator
 
 
-def spiral_generator(fn: int = 0, n: int = 5) -> Generator[tuple, None, None]:
-    """Программа создания и заполнения спиральной квадратной матрицы любой размерности. Параметры вызова:
-    fn - первоначальное значение числовой последовательности, n - размерность матрицы"""
+def spiral_generator(n: int = 2, fn: int = 1) -> Generator[list, None, None]:
+    """Программа создания и заполнения спиральной квадратной матрицы любой размерности. Возвращает спиральную матрицу,
+     заполненную от центра. Параметры вызова: n - размерность матрицы, fn - первоначальное значение числовой
+     последовательности"""
 
     matrix = [[0] * n for _ in range(n)]
     half_n = n // 2
@@ -15,7 +16,7 @@ def spiral_generator(fn: int = 0, n: int = 5) -> Generator[tuple, None, None]:
 
     for _ in range(n * n):
         matrix[y][x] = num
-        yield num, matrix
+        yield matrix
 
         num += 1
 

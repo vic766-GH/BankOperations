@@ -107,7 +107,7 @@ if __name__ == "__main__":
         try:
             print(f"{i + 1}. {next(usd_transactions)}", sep="\n")
         except StopIteration:
-            break
+            pass
     print("___ end of filter_by_currency ___")
 
     descriptions = transaction_descriptions(transactions)
@@ -115,10 +115,10 @@ if __name__ == "__main__":
         try:
             print(f"{i + 1}. {next(descriptions)}", sep="\n")
         except StopIteration:
-            break
+            pass
     print("___ end of transaction_descriptions ___")
 
-    fn = 10
+    fn = 1
     ln = 5
     card_number = card_number_generator(fn, ln)
     for i in range(ln - fn + 1):
@@ -133,12 +133,12 @@ if __name__ == "__main__":
 
     print("\nМодуль src.spiral_gen\n")
 
-    mfn = 100
-    mn = 3
+    mfn = 101
+    mn = 5
 
-    gen = spiral_generator(fn=mfn, n=mn)
+    gen = spiral_generator(n=mn, fn=mfn)
     for i in range(mn * mn):
-        matrix = next(gen)[1]
+        matrix = next(gen)
     for j in range(mn):
         print(matrix[j])
     print("___ end of spiral_generator ___")
