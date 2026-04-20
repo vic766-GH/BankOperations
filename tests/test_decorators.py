@@ -27,9 +27,13 @@ from src.decorators import log
     ],
 )
 def test_decorator(unit: str, num_1: Any, num_2: Any, result: Any, capsys: Any) -> Any:
+    """Тест декоратора с параметрами из модуля decorators.py\n При тестировании из логов исключается дата и время.
+    Остаётся только фиксация начала работы функции, результат работы и завершение работы функции"""
+
     # assert my_function(num_1, num_2) == result
     @log(unit)
     def my_function_summ(x: Any, y: Any) -> Any:
+        """Простая функция суммирования двух чисел"""
         return x + y
 
     my_function_summ(num_1, num_2)

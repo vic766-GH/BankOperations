@@ -13,6 +13,8 @@ def log(filename: str = "cons") -> Any:
     """
 
     def inner(func: Callable) -> Any:
+        """Выполнение настройки вывода процесса логирования работы функции"""
+
         if filename == "cons" or "." not in filename:
             out_unit = "cons"
         else:
@@ -27,6 +29,8 @@ def log(filename: str = "cons") -> Any:
 
         @wraps(func)
         def logging(*args: Any, **kwargs: Any) -> Any:
+            """Выполнение логирования работы функции"""
+
             work_start = f"Начало работы: {datetime.now()}"
             print(work_start)
             if out_unit == "file":
@@ -55,13 +59,13 @@ def log(filename: str = "cons") -> Any:
     return inner
 
 
-@log()
-#@log("..\\mylog2.txt")
-def my_function(x: Any, y: Any) -> Any:
-    return x + y
-
-
-my_function(1, 2)
-my_function(1, "2")
-my_function(71, 28)
-my_function(1.25, 3.75)
+# @log()
+# #@log("..\\mylog2.txt")
+# def my_function(x: Any, y: Any) -> Any:
+#     return x + y
+#
+#
+# my_function(1, 2)
+# my_function(1, "2")
+# my_function(71, 28)
+# my_function(1.25, 3.75)
