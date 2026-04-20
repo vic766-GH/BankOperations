@@ -1,13 +1,10 @@
 import os
-import time
 from datetime import datetime
 from functools import wraps
-from pathlib import Path
-from typing import Any
-from functools import wraps
+from typing import Any, Callable
 
 
-def log(filename: str = "cons"):
+def log(filename: str = "cons") -> Any:
     """
     декоратор, который будет автоматически логировать начало и конец выполнения функции,
     а также ее результаты или возникшие ошибки. Декоратор принимает необязательный аргумент filename,
@@ -15,53 +12,56 @@ def log(filename: str = "cons"):
     в указанный файл (расположен в текущем рабочем каталоге). Иначе логи выводятся в консоль.
     """
 
-    def inner(func):
-        if filename == "cons":
-            log_file = filename
+    def inner(func: Callable) -> Any:
+        if filename == "cons" or "." not in filename:
+            out_unit = "cons"
         else:
+            out_unit = "file"
             log_path = os.path.join(f"{os.getcwd()}", filename)
-            # if os.path.exists(log_path):
-            #     open_mode = "a"
-            # else:
-            #     open_mode = "w"
-            open_mode = "w"
+            if os.path.exists(log_path):
+                open_mode = "a"
+            else:
+                open_mode = "w"
+            # open_mode = "w"
             log_file = open(log_path, open_mode, encoding="utf-8")
 
         @wraps(func)
-        def logging(*args, **kwargs):
-            if filename != 'cons':
-                print(f"\nНачало работы: {datetime.now()}")
-            out_string(log_file, f"Начало работы: {datetime.now()}\n")
+        def logging(*args: Any, **kwargs: Any) -> Any:
+            work_start = f"Начало работы: {datetime.now()}"
+            print(work_start)
+            if out_unit == "file":
+                log_file.write(f"{work_start}\n")
             try:
                 result = func(*args, **kwargs)
             except Exception as err:
-                out_string(log_file, f"{inner(func).__name__} error: {err}. Inputs: {args}\n")
-                if filename != 'cons':
-                    print('error')
+                if out_unit == "file":
+                    print("error")
+                    log_file.write(f"{inner(func).__name__} error: {err}. Inputs: {args}\n")
+                else:
+                    print(f"{inner(func).__name__} error: {err}. Inputs: {args}")
             else:
-                out_string(log_file, f"{inner(func).__name__} ok\n")
-                if filename != 'cons':
+                if out_unit == "file":
+                    log_file.write(f"{inner(func).__name__} ok\n")
                     print(result)
-            out_string(log_file, f"Завершение работы: {datetime.now()}\n\n")
-            if filename != "cons":
-                print(f"Завершение работы: {datetime.now()}\n")
+                else:
+                    print(f"{inner(func).__name__} ok")
+            work_end = f"Завершение работы: {datetime.now()}"
+            print(f"{work_end}\n")
+            if out_unit == "file":
+                log_file.write(f"{work_end}\n\n")
+
         return logging
+
     return inner
 
 
-def out_string(unit: Any, message: str):
-    if unit == "cons":
-        print(message)
-    else:
-        unit.write(message)
-
-
-#@log()
-@log(filename="mylog.txt")
-def my_function(x, y):
+@log()
+#@log("..\\mylog2.txt")
+def my_function(x: Any, y: Any) -> Any:
     return x + y
 
-my_function(1, 2)
-my_function(1, '2')
-my_function(71, 28)
 
+my_function(1, 2)
+my_function(1, "2")
+my_function(71, 28)
+my_function(1.25, 3.75)
