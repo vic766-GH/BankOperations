@@ -27,7 +27,9 @@ def transaction_tu_rub(transaction: dict) -> float:
         amount_in = transaction['operationAmount']['amount']
         currency_in = transaction['operationAmount']['currency']['code']
     except KeyError:
-        return None
+        return 0
+    except TypeError:
+        return 0
     if currency_in == 'RUB':
         return float(amount_in)
     else:

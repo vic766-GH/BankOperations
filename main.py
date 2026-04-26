@@ -151,21 +151,21 @@ if __name__ == "__main__":
 
 
 
-    path = "data/operations.json"
-    results = get_operations(path)
-    for result in results:
-        try:
-            transaction_date = result["date"][0:10]
-            transaction_amount = result["operationAmount"]["amount"]
-            transaction_currency = result["operationAmount"]["currency"]["code"]
-#            print(convert_currency(transaction_date, "RUB", transaction_currency, transaction_amount))
-        except KeyError:
-            print(f"Ошибка в {results.index(result) + 1} словаре: {result}")
-    print(f"Обработано {len(results)} транзакций")
+#     path = "data/operations.json"
+#     results = get_operations(path)
+#     for result in results:
+#         try:
+#             transaction_date = result["date"][0:10]
+#             transaction_amount = result["operationAmount"]["amount"]
+#             transaction_currency = result["operationAmount"]["currency"]["code"]
+# #            print(convert_currency(transaction_date, "RUB", transaction_currency, transaction_amount))
+#         except KeyError:
+#             print(f"Ошибка в {results.index(result) + 1} словаре: {result}")
+#     print(f"Обработано {len(results)} транзакций")
 
     transaction_date = "2019-12-07"
     transaction_amount = "48150.39"
-    print(convert_currency(transaction_date, "RUB", "USD",transaction_amount))
+    print(convert_currency(transaction_date, "SUB", "USD",transaction_amount))
 
     transaction_date = "2025-12-07"
     transaction_amount = "48150.39"
