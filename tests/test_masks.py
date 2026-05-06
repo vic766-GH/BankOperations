@@ -13,7 +13,6 @@ from src.masks import get_mask_account, get_mask_card_number
         ("70007922896O6361", ""),  # некорректные данные - присутствует не цифра - вместо 0 - O
     ],
 )
-
 def test_get_mask_card_number(card_number: str, mask_card_number: str) -> None:
     assert get_mask_card_number(card_number) == mask_card_number
 
@@ -27,6 +26,5 @@ def test_get_mask_card_number(card_number: str, mask_card_number: str) -> None:
         ("70007922896O6361", ""),  # некорректные данные - присутствует не цифра - вместо 0 - O
     ],
 )
-
 def test_get_mask_account(account: str, mask_account: str) -> None:
     assert get_mask_account(account) == mask_account
