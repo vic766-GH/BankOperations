@@ -159,7 +159,7 @@ Any:</font>).
 
 #### <font size="4">***7. <u>test_utils.py:</u>***</font>
 Выполняет тестирование функций модуля <font size="3">**utils.py**
-с применением параметризации, Mock и patch.
+с применением параметризации и Mock.
 
 <font size="3">**test_get_operations**(path_to_file: str, get_dict: dict) -> None:</font> - Тест функции,
 предназначенной для получения  список словарей с транзакциями из заданного json-файла;</font>
