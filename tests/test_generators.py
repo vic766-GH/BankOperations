@@ -8,13 +8,18 @@ from src.generators import card_number_generator, filter_by_currency, transactio
     [
         ("unselected_transactions_list", "USD", "usd_select_list"),  # корректные данные
         ("unselected_transactions_list", "RUB", "rub_select_list"),  # корректные данные
-        ("unselected_transactions_list", "CNY", "empty_list"),  # некорректные данные - отсутствует заданный тип операции
+        (
+            "unselected_transactions_list",
+            "CNY",
+            "empty_list",
+        ),  # некорректные данные - отсутствует заданный тип операции
         ([], "USD", []),  # некорректные данные - пустые словари
         ([], "", []),  # некорректные данные - отсутствует критерий операции
     ],
 )
-def test_filter_by_currency(unselected_list: list, currency: str, selected_list: list,
-    request: pytest.FixtureRequest) -> None:
+def test_filter_by_currency(
+    unselected_list: list, currency: str, selected_list: list, request: pytest.FixtureRequest
+) -> None:
     if isinstance(unselected_list, str) and isinstance(selected_list, str):
         data_1 = request.getfixturevalue(unselected_list)
         data_2 = request.getfixturevalue(selected_list)
@@ -30,15 +35,15 @@ def test_filter_by_currency(unselected_list: list, currency: str, selected_list:
         except StopIteration:
             pass
 
+
 @pytest.mark.parametrize(
     "unselected_list, selected_list",
     [
         ("unselected_transactions_list", "description_list"),  # корректные данные
         ([], []),  # некорректные данные - пустые словари
-     ],
+    ],
 )
-def test_transaction_descriptions(unselected_list: list, selected_list: list,
-    request: pytest.FixtureRequest) -> None:
+def test_transaction_descriptions(unselected_list: list, selected_list: list, request: pytest.FixtureRequest) -> None:
     if isinstance(unselected_list, str) and isinstance(selected_list, str):
         data_1 = request.getfixturevalue(unselected_list)
         data_2 = request.getfixturevalue(selected_list)
@@ -54,17 +59,19 @@ def test_transaction_descriptions(unselected_list: list, selected_list: list,
         except StopIteration:
             pass
 
+
 @pytest.mark.parametrize(
     "start_num, end_num, card_number_list",
     [
         (1, 5, "card_number_generated_list"),  # корректные данные
-        (5,  5, ["0000 0000 0000 0005"]),  # корректные данные - начальный номер равен конечному
+        (5, 5, ["0000 0000 0000 0005"]),  # корректные данные - начальный номер равен конечному
         (6, 5, []),  # некорректные данные - начальный номер больше конечного
-     ],
+    ],
 )
-def test_card_number_generator(start_num: int, end_num: int, card_number_list: list,
-    request: pytest.FixtureRequest) -> None:
-    if isinstance(card_number_list, str) :
+def test_card_number_generator(
+    start_num: int, end_num: int, card_number_list: list, request: pytest.FixtureRequest
+) -> None:
+    if isinstance(card_number_list, str):
         data_2 = request.getfixturevalue(card_number_list)
     else:
         data_2 = card_number_list
