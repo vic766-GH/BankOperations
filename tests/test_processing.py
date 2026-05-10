@@ -13,7 +13,9 @@ from src.processing import filter_by_state, sort_by_date
         ([], "", []),  # некорректные данные - отсутствует критерий операции
     ],
 )
-def test_filter_by_state(input_list: list, state_select: str, selected_list: list, request: pytest.FixtureRequest) -> None:
+def test_filter_by_state(
+    input_list: list, state_select: str, selected_list: list, request: pytest.FixtureRequest
+) -> None:
     if isinstance(input_list, str) and isinstance(selected_list, str):
         data_1 = request.getfixturevalue(input_list)
         data_2 = request.getfixturevalue(selected_list)
@@ -31,7 +33,9 @@ def test_filter_by_state(input_list: list, state_select: str, selected_list: lis
         ([], False, []),
     ],
 )
-def test_sort_by_date(input_list: list, descending_order: bool, selected_list: list, request: pytest.FixtureRequest) -> None:
+def test_sort_by_date(
+    input_list: list, descending_order: bool, selected_list: list, request: pytest.FixtureRequest
+) -> None:
     if isinstance(input_list, str) and isinstance(selected_list, str):
         data_1 = request.getfixturevalue(input_list)
         data_2 = request.getfixturevalue(selected_list)

@@ -57,6 +57,30 @@ None]:</font>
      последовательности
 
 
+#### <font size="4">***6. <u>decorators.py:</u>***</font>
+
+<font size="3">**log**(filename: str = "cons") -> Any:</font>
+     декоратор, который автоматически логирует начало и конец выполнения функции,
+    а также ее результаты или возникшие ошибки. Декоратор принимает необязательный аргумент <font size="3">
+    **"filename"**</font>, который определяет, куда будут записываться логи: Если filename задан,
+    логи записываются в указанный файл (расположен в текущем рабочем каталоге). Иначе логи выводятся
+    в консоль.
+
+#### <font size="4">***7. <u>utils.py:</u>***</font>
+
+<font size="3">**get_operations**(path: str) -> list:</font>
+    Функция, которая получает путь к файлу с данными о транзакциях и возвращает список словарей с транзакциями
+
+<font size="3">**transaction_to_rub**(transaction: dict) -> float:</font>
+   Функцию, которая принимает на вход транзакцию и возвращает сумму транзакции в рублях. Если транзакция выполнялась
+в иной, чем рубль валюте, выполняется конвертация по курсу на дату транзакции с использованием внешнего API (APILayer).
+
+#### <font size="4">***8. <u>external_api:</u>***</font>
+
+<font size="3">**convert_currency**(date: str, to_currency: str, from_currency: str, amount: str) -> float:</font>
+    Функция, которая получает информацию о транзакции и возвращает сумму транзакции в целевой валюте после конвертации
+    исходной валюты по курсу на заданную дату с использованием сервиса (APILayer)
+
 ### <font size="4"><span style="color: green">***Тестирование***</font>
 
 #### <font size="4">***1. <u>test_masks.py:</u>***</font>
@@ -123,3 +147,34 @@ None]:</font>
         любой размерности (<font size="3">***spiral_generator***</font>).
 
 
+#### <font size="4">***6. <u>test_decorators.py:</u>***</font>
+Выполняет тестирование функций модуля <font size="3">**decorators.py**
+с применением параметризации.
+
+<font size="3">**test_decorator**(unit: str, num_1: Any, num_2: Any, result: Any, capsys: Any) ->
+    Any:</font> - Тест декоратора с параметрами из модуля decorators.py, выполняющего логирование работы
+функции. При тестировании из логов исключается дата и время. Остаётся только фиксация начала работы функции, 
+результат работы и завершение работы функции <font size="3">***my_function_summ***(x: Any, y: Any) ->
+Any:</font>).
+
+#### <font size="4">***7. <u>test_utils.py:</u>***</font>
+Выполняет тестирование функций модуля <font size="3">**utils.py**
+с применением параметризации и Mock.
+
+<font size="3">**test_get_operations**(path_to_file: str, get_dict: dict) -> None:</font> - Тест функции,
+предназначенной для получения  список словарей с транзакциями из заданного json-файла;</font>
+
+<font size="3">**transaction_to_rub**(transaction: dict) -> float:</font> - Тест функции,
+предназначенной для получения суммы полученной транзакции в рублёвом эквиваленте.</font>
+
+#### <font size="4">***8. <u>test_external_api.py:</u>***</font>
+Выполняет тестирование функций модуля <font size="3">**external_api.py**
+с применением параметризации, Mock и patch.
+
+<font size="3">**test_convert_currency**(operation_date: str, to_currency: str, from_currency: str,
+amount: str, result_converted: float) -> None:</font> - Тест функции, для конвертации валют с реальным
+обращением к API (APILayer);</font>
+
+<font size="3">**test_convert_currency_mock**(mock_convert_currency: Any, operation_date: str,
+    to_currency: str, from_currency: str, amount: str, result_converted: float, ) -> None:</font> - Тест
+функции, предназначенной для конвертации валют с маскированием обращения к API через Mock.</font>
