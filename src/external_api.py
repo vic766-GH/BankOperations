@@ -1,9 +1,9 @@
 import json
-import os
 import logging
-import requests
-
+import os
 from json import loads
+
+import requests
 from dotenv import load_dotenv
 
 # Загрузка переменных из .env-файла
@@ -52,11 +52,11 @@ def convert_currency(date: str, to_currency: str, from_currency: str, amount: st
         explanation = APILAYER_ERROR_CODE[status_code]["EXPLANATION"]
         error_code = loads(converted.content)
         logger.error(f"Код возврата от сервера: {status_code}:{status} ({explanation})")
-        #print(f"Код возврата от сервера: {status_code}:{status} ({explanation})")
+        # print(f"Код возврата от сервера: {status_code}:{status} ({explanation})")
         try:
             logger.error(f"{error_code["error"]["code"]} ({error_code["error"]["message"]}")
         #    print(f"{error_code["error"]["code"]} ({error_code["error"]["message"]}")
         except KeyError:
             logger.error(f"{error_code["message"]}")
-       #    print(f"{error_code["message"]}")
+        #    print(f"{error_code["message"]}")
         return 0
