@@ -1,12 +1,15 @@
 import json
 import os
-from json import loads
-
+import logging
 import requests
+
+from json import loads
 from dotenv import load_dotenv
 
 # Загрузка переменных из .env-файла
 load_dotenv()
+
+logger = logging.getLogger("utils")
 
 APILAYER_ERROR_CODE = {
     400: {
@@ -37,6 +40,7 @@ def convert_currency(date: str, to_currency: str, from_currency: str, amount: st
     payload: dict = {}
     headers = {"apikey": os.getenv("APILAYER_KEY")}
 
+    logger.info(f"Обращение к внешнему API: {url_convert[0:24]}")
     converted = requests.request("GET", url=url_convert, headers=headers, data=payload)
     status_code = converted.status_code
     if status_code == 200:
@@ -47,9 +51,12 @@ def convert_currency(date: str, to_currency: str, from_currency: str, amount: st
         status = APILAYER_ERROR_CODE[status_code]["STATUS_CODE"]
         explanation = APILAYER_ERROR_CODE[status_code]["EXPLANATION"]
         error_code = loads(converted.content)
-        print(f"Код возврата от сервера: {status_code}:{status} ({explanation})")
+        logger.error(f"Код возврата от сервера: {status_code}:{status} ({explanation})")
+        #print(f"Код возврата от сервера: {status_code}:{status} ({explanation})")
         try:
-            print(f"{error_code["error"]["code"]} ({error_code["error"]["message"]}")
+            logger.error(f"{error_code["error"]["code"]} ({error_code["error"]["message"]}")
+        #    print(f"{error_code["error"]["code"]} ({error_code["error"]["message"]}")
         except KeyError:
-            print(f"{error_code["message"]}")
+            logger.error(f"{error_code["message"]}")
+       #    print(f"{error_code["message"]}")
         return 0
