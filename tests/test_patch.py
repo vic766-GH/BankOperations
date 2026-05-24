@@ -1,5 +1,5 @@
 # test_patch_example.py
-import json
+
 from unittest.mock import Mock, patch
 
 # --- Тестируемый код (обычно в другом файле) ---

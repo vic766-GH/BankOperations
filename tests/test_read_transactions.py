@@ -1,10 +1,13 @@
+from pathlib import Path
 from unittest.mock import mock_open, patch
 
 import pandas as pd
 import pytest
 from mypy.types import Any
 
-from src.read_tansactions import read_csv, read_xls
+from src.read_transactions import read_csv, read_xls
+
+BASE_DIR = f"{Path(__file__).resolve().parent}"
 
 
 @pytest.fixture
@@ -108,7 +111,7 @@ def csv_stream_fixture() -> str:
     ),
 )
 def test_read_csv_mock1(transactions_fixture: list[dict]) -> None:
-    """Тестирование модуля read_csv() с использованием объекта Mock в декораторе patch. Таким образом, мокирукется
+    """Тестирование функции read_csv() с использованием объекта Mock в декораторе patch. Таким образом, мокирукется
     реальное чтение из файла с последующей нормальной работой объекта csv.DictReader"""
 
     path_csv_file = "transactions.csv"
@@ -116,7 +119,7 @@ def test_read_csv_mock1(transactions_fixture: list[dict]) -> None:
 
 
 def test_read_csv_mock2(transactions_fixture: list[dict], csv_stream_fixture: str) -> None:
-    """Тестирование модуля read_csv() с использованием объекта Mock в качестве контекстного менеджера. Таким образом,
+    """Тестирование функции read_csv() с использованием объекта Mock в качестве контекстного менеджера. Таким образом,
     мокирукется реальное чтение из файла с последующей нормальной работой объекта csv.DictReader"""
 
     with patch("builtins.open", mock_open(read_data=csv_stream_fixture)):
@@ -126,14 +129,17 @@ def test_read_csv_mock2(transactions_fixture: list[dict], csv_stream_fixture: st
 
 @patch("pandas.read_excel")
 def test_read_exel_mock(mock_read_excel: Any, transactions_fixture: list[dict]) -> None:
-    """Тестирование модуля read_xls() с использованием объекта Mock в качестве контекстного менеджера. Таким образом,
+    """Тестирование функции read_xls() с использованием объекта Mock в качестве контекстного менеджера. Таким образом,
     мокирукется реальное чтение из файла"""
 
     mock_read_excel.return_value = pd.DataFrame(transactions_fixture)
-    xls_file_name = "transactions3.xlsx"
 
-    with patch("builtins.open", mock_open(read_data=str(pd.DataFrame(transactions_fixture)))):
-        path_xls_file = xls_file_name
-        result = read_xls(path_xls_file)
+    excel_file_name = "transactions_excel.xlsx"
+    relative_path = Path(f"{BASE_DIR}/../data/{excel_file_name}")
+    absolute_path = relative_path.resolve()  # Преобразует путь в абсолютный
+    path_excel_file = absolute_path
+
+    with patch("builtins.open", mock_open(read_data="fiction_data")):
+        result = read_xls(str(path_excel_file))
         assert result == transactions_fixture
     mock_read_excel.assert_called()

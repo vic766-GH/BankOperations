@@ -81,6 +81,16 @@ None]:</font>
     Функция, которая получает информацию о транзакции и возвращает сумму транзакции в целевой валюте после конвертации
     исходной валюты по курсу на заданную дату с использованием сервиса (APILayer)
 
+#### <font size="4">***9. <u>read_tansactions.py:</u>***</font>
+
+<font size="3">**read_csv**(path_csv_file: str) -> list[dict]:</font>
+    Функция чтения финансовых операций из файла типа 'csv'. В качестве аргумента принимает путь к файлу в виде 
+    строки и возвращает список словарей прочитанных транзакций
+
+<font size="3">**read_xls**(path_xls_file: str) -> list[dict]:</font>
+    Функция чтения финансовых операций из файла типа 'Excel'. В качестве аргумента принимает путь к файлу в виде 
+    строки и возвращает список словарей прочитанных транзакций
+
 ### <font size="4"><span style="color: green">***Тестирование***</font>
 
 #### <font size="4">***1. <u>test_masks.py:</u>***</font>
@@ -178,3 +188,19 @@ amount: str, result_converted: float) -> None:</font> - Тест функции,
 <font size="3">**test_convert_currency_mock**(mock_convert_currency: Any, operation_date: str,
     to_currency: str, from_currency: str, amount: str, result_converted: float, ) -> None:</font> - Тест
 функции, предназначенной для конвертации валют с маскированием обращения к API через Mock.</font>
+
+#### <font size="4">***9. <u>test_read_transactions.py:</u>***</font>
+Выполняет тестирование функций модуля <font size="3">**read_transactions.py**
+с применением фикстур, Mock и patch.
+
+<font size="3">**test_read_csv_mock1**(transactions_fixture: list[dict]) -> None:</font> - Тест функции
+read_csv() с использованием объекта Mock в декораторе patch. Таким образом, мокирукется реальное чтение
+из файла с последующей нормальной работой объекта csv.DictReader</font>
+
+<font size="3">**test_read_csv_mock2**(transactions_fixture: list[dict], csv_stream_fixture: str) -> None:
+</font> - Тест функции read_csv() с использованием объекта Mock в качестве контекстного менеджера.
+Таким образом, мокирукется реальное чтение из файла с последующей нормальной работой объекта csv.DictReader.
+
+<font size="3">**test_read_exel_mock**(mock_read_excel: Any, transactions_fixture: list[dict]) -> None:
+</font> - Тест функции read_xls() с использованием объекта Mock в качестве контекстного менеджера. Таким образом,
+    мокирукется реальное чтение из файла.
