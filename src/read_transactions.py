@@ -17,7 +17,7 @@ def read_xls(path_xls_file: str) -> list[dict]:
     """Функция чтения финансовых операций из файла типа 'Excel'. В качестве аргумента принимает путь к файлу в виде
     строки и возвращает список словарей прочитанных транзакций"""
 
-    xlx_transactions = pd.read_excel(path_xls_file)
+    xlx_transactions = pd.read_excel(path_xls_file, keep_default_na=False)
     list_transactions = list(xlx_transactions.to_dict(orient="records"))
 
     return list_transactions
