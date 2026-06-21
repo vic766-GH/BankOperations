@@ -802,6 +802,67 @@ def test_transactions_dict_xlsx() -> list[dict]:
     ]
 
 
+@pytest.fixture
+def test_transactions_dict_xlsx_search() -> list[dict]:
+    return [
+        {
+            "id": 5380041,
+            "state": "CANCELED",
+            "date": "2021-02-01T11:54:58Z",
+            "amount": 23789,
+            "currency_name": "Peso",
+            "currency_code": "UYU",
+            "from": "",
+            "to": "Счет 23294994494356835683",
+            "description": "Открытие вклада",
+        },
+        {
+            "id": 5429839,
+            "state": "EXECUTED",
+            "date": "2023-06-23T19:46:34Z",
+            "amount": 25261,
+            "currency_name": "Hryvnia",
+            "currency_code": "UAH",
+            "from": "",
+            "to": "Счет 76768135089446747029",
+            "description": "Открытие вклада",
+        },
+        {
+            "id": 3226899,
+            "state": "EXECUTED",
+            "date": "2023-04-17T09:21:15Z",
+            "amount": 21680,
+            "currency_name": "Koruna",
+            "currency_code": "CZK",
+            "from": "",
+            "to": "Счет 88329674734590848775",
+            "description": "Открытие вклада",
+        },
+        {
+            "id": 3107343,
+            "state": "EXECUTED",
+            "date": "2023-01-25T13:33:00Z",
+            "amount": 33639,
+            "currency_name": "Krona",
+            "currency_code": "SEK",
+            "from": "",
+            "to": "Счет 35662766798195077538",
+            "description": "Открытие вклада",
+        },
+        {
+            "id": 4641894,
+            "state": "EXECUTED",
+            "date": "2021-08-30T12:27:22Z",
+            "amount": 11111,
+            "currency_name": "Krona",
+            "currency_code": "SEK",
+            "from": "",
+            "to": "Счет 53688013223998817599",
+            "description": "Открытие вклада",
+        },
+    ]
+
+
 # @pytest.fixture
 # def test_transactions_dict_outprint() -> list[str]:
 #     return [

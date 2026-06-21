@@ -43,10 +43,10 @@ def convert_currency(
         f"&amount={amount}&date={date}"
     )
     payload: dict = {}
-    headers = {"apikey": os.getenv("APILAYER_KEY")}
+    apikey = {"apikey": str(os.getenv("APILAYER_KEY"))}
 
     logger.info(f"Обращение к внешнему API: {url_convert[0:24]}")
-    converted = requests.request("GET", url=url_convert, headers=headers, data=payload)
+    converted = requests.request("GET", url=url_convert, headers=apikey, data=payload)
     status_code = converted.status_code
     if status_code == 200:
         converted_list = json.loads(converted.text)

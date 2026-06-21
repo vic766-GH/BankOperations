@@ -12,7 +12,10 @@ from src.utils import get_operations, transaction_to_rub
         ("../operations_empty.json", []),  # Некорректные данные - неверный путь к файлу
         ("operations_empty.json", []),  # Некорректные данные - пустой файл
         ("operations_empty_list.json", []),  # Корректные данные - пустой список
-        ("operations_not_json.json", [],),  # Некорректные данные - некорректный json-файл
+        (
+            "operations_not_json.json",
+            [],
+        ),  # Некорректные данные - некорректный json-файл
         (
             "operations_cut.json",
             [

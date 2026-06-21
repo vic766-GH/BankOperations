@@ -8,6 +8,10 @@ import pandas as pd
 
 from src.read_transactions import read_csv, read_xls
 
+"""Модуль обеспечивающий функционал взаимодействия с пользователем для выбора источника данных по транзакциям, 
+дальнейшей обработки полученных транзакций и вывода в консоль результатов работы где реальные данные маскируются 
+особым, ранее определённым способом. Работа с модулем производится путём запуска основной программы в модуле main.py 
+из корневого каталога проекта"""
 
 def process_bank_search(operations_data: list[dict], state: str) -> list[dict]:
     """функция, принимает список словарей с данными о банковских операциях и строку поиска,
@@ -95,7 +99,6 @@ def source_select(file_name: str) -> tuple[list, list[dict]]:
         result_list = result_list_rub
 
     if answers[5].lower() == "да":
-        # answer_7 = input('Введите слово для поиска\n>>>')
         result_list = process_bank_search(result_list, state=answers[6])
 
     return answers[1], result_list

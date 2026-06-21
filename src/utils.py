@@ -26,7 +26,7 @@ logger.addHandler(file_handler)
 def get_operations(path: str) -> list:
     """Функция получает путь к файлу с данными о транзакциях и возвращает список словарей с транзакциями"""
     current_directory = Path.cwd()
-    if path == '':
+    if path == "":
         return []
     elif current_directory.stem == "BankOperations":
         source_dir = "data"
