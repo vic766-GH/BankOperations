@@ -1,6 +1,7 @@
 import pytest
 
-from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
+from src.generators import (card_number_generator, filter_by_currency,
+                            transaction_descriptions)
 
 
 @pytest.mark.parametrize(
@@ -18,7 +19,10 @@ from src.generators import card_number_generator, filter_by_currency, transactio
     ],
 )
 def test_filter_by_currency(
-    unselected_list: list, currency: str, selected_list: list, request: pytest.FixtureRequest
+    unselected_list: list,
+    currency: str,
+    selected_list: list,
+    request: pytest.FixtureRequest,
 ) -> None:
     if isinstance(unselected_list, str) and isinstance(selected_list, str):
         data_1 = request.getfixturevalue(unselected_list)
@@ -43,7 +47,9 @@ def test_filter_by_currency(
         ([], []),  # некорректные данные - пустые словари
     ],
 )
-def test_transaction_descriptions(unselected_list: list, selected_list: list, request: pytest.FixtureRequest) -> None:
+def test_transaction_descriptions(
+    unselected_list: list, selected_list: list, request: pytest.FixtureRequest
+) -> None:
     if isinstance(unselected_list, str) and isinstance(selected_list, str):
         data_1 = request.getfixturevalue(unselected_list)
         data_2 = request.getfixturevalue(selected_list)
@@ -64,7 +70,11 @@ def test_transaction_descriptions(unselected_list: list, selected_list: list, re
     "start_num, end_num, card_number_list",
     [
         (1, 5, "card_number_generated_list"),  # корректные данные
-        (5, 5, ["0000 0000 0000 0005"]),  # корректные данные - начальный номер равен конечному
+        (
+            5,
+            5,
+            ["0000 0000 0000 0005"],
+        ),  # корректные данные - начальный номер равен конечному
         (6, 5, []),  # некорректные данные - начальный номер больше конечного
     ],
 )

@@ -1,12 +1,22 @@
 import json
 import logging
+from pathlib import Path
 
 from src.external_api import convert_currency
 
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(funcName)s -  %(levelname)s - %(message)s")
-file_path = f"../logs/{__name__}.log"
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(funcName)s -  %(levelname)s - %(message)s"
+)
+
+current_directory = Path.cwd()
+if current_directory.stem == "BankOperations":
+    source_dir = "logs/src.masks.log"
+else:
+    source_dir = "../logs/src.masks.log"
+file_path = Path(source_dir)
+
 file_handler = logging.FileHandler(file_path, encoding="utf-8", mode="w")
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
@@ -15,9 +25,17 @@ logger.addHandler(file_handler)
 
 def get_operations(path: str) -> list:
     """Функция получает путь к файлу с данными о транзакциях и возвращает список словарей с транзакциями"""
+    current_directory = Path.cwd()
+    if path == '':
+        return []
+    elif current_directory.stem == "BankOperations":
+        source_dir = "data"
+    else:
+        source_dir = "../data"
+    source_file = Path.joinpath(Path(source_dir), path)
 
     try:
-        with open(path, "r", encoding="UTF-8") as operations_file:
+        with open(source_file, "r", encoding="UTF-8") as operations_file:
             try:
                 logger.info(f"Получение транзакций из файла: {path}")
                 operations_list: list = json.load(operations_file)

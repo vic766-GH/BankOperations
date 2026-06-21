@@ -1,9 +1,19 @@
 import logging
+from pathlib import Path
 
 logger = logging.getLogger("masks")
 logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(funcName)s -  %(levelname)s - %(message)s")
-file_path = f"../logs/src.masks.log"
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(funcName)s -  %(levelname)s - %(message)s"
+)
+
+current_directory = Path.cwd()
+if current_directory.stem == "BankOperations":
+    source_dir = "logs/src.masks.log"
+else:
+    source_dir = "../logs/src.masks.log"
+file_path = Path(source_dir)
+
 file_handler = logging.FileHandler(file_path, encoding="utf-8", mode="w")
 # file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
@@ -17,7 +27,9 @@ def get_mask_card_number(card_number: str) -> str:
 
     if len(card_number) == 16 and card_number.isdigit():
         mask_result = f"{card_number[0:4]} {card_number[4:6]}** **** {card_number[-4:]}"
-        logger.info(f"Успешно. Выполнено маскирование карты: {card_number} с результатом: {mask_result}")
+        logger.info(
+            f"Успешно. Выполнено маскирование карты: {card_number} с результатом: {mask_result}"
+        )
         return mask_result
     else:
         logger.error(f"Ошибка. Неверный номер карты: {card_number}")
@@ -31,7 +43,9 @@ def get_mask_account(card_account: str) -> str:
 
     if len(card_account) == 20 and card_account.isdigit():
         mask_result = f"**{card_account[-4:]}"
-        logger.info(f"Успешно. Выполнено маскирование карты: {card_account} с результатом: {mask_result}")
+        logger.info(
+            f"Успешно. Выполнено маскирование карты: {card_account} с результатом: {mask_result}"
+        )
         return mask_result
     else:
         logger.error(f"Ошибка. Неверный номер карты: {card_account}")

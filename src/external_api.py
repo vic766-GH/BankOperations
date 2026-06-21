@@ -17,7 +17,10 @@ APILAYER_ERROR_CODE = {
         "EXPLANATION": "The request was unacceptable,often due to missing a required parameter.",
     },
     401: {"STATUS_CODE": "Unauthorized", "EXPLANATION": "No valid API key provided."},
-    404: {"STATUS_CODE": "Not Found", "EXPLANATION": "The requested resource doesn't exist."},
+    404: {
+        "STATUS_CODE": "Not Found",
+        "EXPLANATION": "The requested resource doesn't exist.",
+    },
     429: {
         "STATUS_CODE": "Too many requests",
         "EXPLANATION": "API request limit exceeded. See section Rate Limiting for more info.",
@@ -29,7 +32,9 @@ APILAYER_ERROR_CODE = {
 }
 
 
-def convert_currency(date: str, to_currency: str, from_currency: str, amount: str) -> float:
+def convert_currency(
+    date: str, to_currency: str, from_currency: str, amount: str
+) -> float:
     """Получает информацию о транзакции и возвращает сумму транзакции в целевой валюте после конвертации
     исходной валюты по курсу на заданную дату с использованием сервиса APILayer"""
 
@@ -54,7 +59,9 @@ def convert_currency(date: str, to_currency: str, from_currency: str, amount: st
         logger.error(f"Код возврата от сервера: {status_code}:{status} ({explanation})")
         # print(f"Код возврата от сервера: {status_code}:{status} ({explanation})")
         try:
-            logger.error(f"{error_code["error"]["code"]} ({error_code["error"]["message"]}")
+            logger.error(
+                f"{error_code["error"]["code"]} ({error_code["error"]["message"]}"
+            )
         #    print(f"{error_code["error"]["code"]} ({error_code["error"]["message"]}")
         except KeyError:
             logger.error(f"{error_code["message"]}")

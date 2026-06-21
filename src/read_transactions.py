@@ -44,7 +44,9 @@ def main() -> None:
     absolute_path = relative_path.resolve()  # Преобразует путь в абсолютный
     path_excel_file = absolute_path
     transactions_in_xls = read_xls(str(path_excel_file))
-    print(f'Количество транзакций в файле "{excel_file_name}":{len(transactions_in_xls)}')
+    print(
+        f'Количество транзакций в файле "{excel_file_name}":{len(transactions_in_xls)}'
+    )
 
 
 if __name__ == "__main__":

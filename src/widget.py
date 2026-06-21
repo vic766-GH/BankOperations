@@ -13,10 +13,14 @@ def mask_account_card(card_info: str) -> str:
     card_info_number = card_info[last_space_index + 1 :]
     len_card_info_number = len(card_info_number)
 
-    if len(card_info) <= 16:  # Некорректные данные - отсутствует наименование или номер карты, или ключевое слово
+    if (
+        len(card_info) <= 16
+    ):  # Некорректные данные - отсутствует наименование или номер карты, или ключевое слово
         # print("Некорректные данные - отсутствует наименование или номер карты, номер счёта, или ключевое слово")
         return ""
-    if not card_info_number.isdigit():  # Проверка на наличие не цифровых символов в номере
+    if (
+        not card_info_number.isdigit()
+    ):  # Проверка на наличие не цифровых символов в номере
         # print("Некорректные данные - наличие не цифровых символов в номере")
         return ""
 
@@ -25,7 +29,9 @@ def mask_account_card(card_info: str) -> str:
         if len_card_info_number == 20:
             # print("Корректный счёт")
             return f"Счет {get_mask_account(card_info_number)}"
-        elif len_card_info_number > 20:  # Некорректные данные - превышено количество цифр в счёте
+        elif (
+            len_card_info_number > 20
+        ):  # Некорректные данные - превышено количество цифр в счёте
             # print("Некорректные данные - превышено количество цифр в счёте")
             return ""
         else:
@@ -40,7 +46,9 @@ def mask_account_card(card_info: str) -> str:
         elif len_card_info_number == 16:
             # print("Корректная карта")
             return f"{card_info[: last_space_index]} {get_mask_card_number(card_info_number)}"
-        elif len(card_info_number) > 16:  # Некорректные данные - превышено количество цифр в номере карты
+        elif (
+            len(card_info_number) > 16
+        ):  # Некорректные данные - превышено количество цифр в номере карты
             # print("Некорректные данные - превышено количество цифр в номере карты")
             return ""
         else:

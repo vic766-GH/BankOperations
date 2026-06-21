@@ -8,13 +8,20 @@ from src.processing import filter_by_state, sort_by_date
     [
         ("unsorted_list", "EXECUTED", "executed_select_list"),  # корректные данные
         ("unsorted_list", "CANCELED", "canceled_select_list"),  # корректные данные
-        ("one_operation_list", "CANCELED", "empty_list"),  # некорректные данные - отсутствует заданный тип операции
+        (
+            "one_operation_list",
+            "CANCELED",
+            "empty_list",
+        ),  # некорректные данные - отсутствует заданный тип операции
         ([], "CANCELED", []),  # некорректные данные - пустые словари
         ([], "", []),  # некорректные данные - отсутствует критерий операции
     ],
 )
 def test_filter_by_state(
-    input_list: list, state_select: str, selected_list: list, request: pytest.FixtureRequest
+    input_list: list,
+    state_select: str,
+    selected_list: list,
+    request: pytest.FixtureRequest,
 ) -> None:
     if isinstance(input_list, str) and isinstance(selected_list, str):
         data_1 = request.getfixturevalue(input_list)
@@ -34,7 +41,10 @@ def test_filter_by_state(
     ],
 )
 def test_sort_by_date(
-    input_list: list, descending_order: bool, selected_list: list, request: pytest.FixtureRequest
+    input_list: list,
+    descending_order: bool,
+    selected_list: list,
+    request: pytest.FixtureRequest,
 ) -> None:
     if isinstance(input_list, str) and isinstance(selected_list, str):
         data_1 = request.getfixturevalue(input_list)

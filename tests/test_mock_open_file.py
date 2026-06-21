@@ -30,7 +30,10 @@ def test_parse_valid_csv() -> None:
         ]  # Проверка результата
 
 
-@patch("builtins.open", mock_open(read_data="name,age,city\nAlice,30,New York\nBob,25,Los Angeles"))
+@patch(
+    "builtins.open",
+    mock_open(read_data="name,age,city\nAlice,30,New York\nBob,25,Los Angeles"),
+)
 def test_parse_valid_csv1() -> None:
 
     result = parse_csv("test_file.csv")

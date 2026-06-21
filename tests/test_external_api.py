@@ -14,16 +14,41 @@ from src.external_api import convert_currency
     [
         ("2019-08-26", "RUB", "RUB", "31957.58", 31957.58),  # Корректные данные
         ("2019-08-26", "RUB", "USD", "8221.378", 543664.91),  # Корректные данные
-        ("2019-14-26", "RUB", "USD", "8221.378", 0),  # Некорректные данные - неверная дата
-        ("2019-08-26", "RUВ", "USD", "8221.378", 0),  # Некорректные данные - неверная валюта (использован
+        (
+            "2019-14-26",
+            "RUB",
+            "USD",
+            "8221.378",
+            0,
+        ),  # Некорректные данные - неверная дата
+        (
+            "2019-08-26",
+            "RUВ",
+            "USD",
+            "8221.378",
+            0,
+        ),  # Некорректные данные - неверная валюта (использован
         # символ русской раскладки)
-        ("2019-14-26", "RUВ", "USB", "8221.378", 0),  # Некорректные данные - несуществующая валюта
+        (
+            "2019-14-26",
+            "RUВ",
+            "USB",
+            "8221.378",
+            0,
+        ),  # Некорректные данные - несуществующая валюта
     ],
 )
 def test_convert_currency(
-    operation_date: str, to_currency: str, from_currency: str, amount: str, result_converted: float
+    operation_date: str,
+    to_currency: str,
+    from_currency: str,
+    amount: str,
+    result_converted: float,
 ) -> None:
-    assert convert_currency(operation_date, to_currency, from_currency, amount) == result_converted
+    assert (
+        convert_currency(operation_date, to_currency, from_currency, amount)
+        == result_converted
+    )
 
 
 # Тестирование конвертации валют с маскированием обращения к API через Mock
@@ -32,10 +57,28 @@ def test_convert_currency(
     [
         ("2019-08-26", "RUB", "RUB", "31957.58", 31957.58),  # Корректные данные
         ("2019-08-26", "RUB", "USD", "8221.378", 543664.91),  # Корректные данные
-        ("2019-14-26", "RUB", "USD", "8221.378", 0),  # Некорректные данные - неверная дата
-        ("2019-08-26", "RUВ", "USD", "8221.378", 0),  # Некорректные данные - неверная валюта (использован
+        (
+            "2019-14-26",
+            "RUB",
+            "USD",
+            "8221.378",
+            0,
+        ),  # Некорректные данные - неверная дата
+        (
+            "2019-08-26",
+            "RUВ",
+            "USD",
+            "8221.378",
+            0,
+        ),  # Некорректные данные - неверная валюта (использован
         # символ русской раскладки)
-        ("2019-14-26", "RUВ", "USB", "8221.378", 0),  # Некорректные данные - несуществующая валюта
+        (
+            "2019-14-26",
+            "RUВ",
+            "USB",
+            "8221.378",
+            0,
+        ),  # Некорректные данные - несуществующая валюта
     ],
 )
 @patch("requests.request")
@@ -63,5 +106,8 @@ def test_convert_currency_mock(
     )
 
     mock_convert_currency.return_value = mock_response
-    assert convert_currency(operation_date, to_currency, from_currency, amount) == result_converted
+    assert (
+        convert_currency(operation_date, to_currency, from_currency, amount)
+        == result_converted
+    )
     mock_convert_currency.assert_called()

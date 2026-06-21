@@ -56,7 +56,8 @@ def spiral_generator(n: int = 2, fn: int = 1) -> Generator[list, None, None]:
             corner_set = True
 
         if circle_change or (
-            (upper_left_corner_x <= x <= upper_right_corner_x) and (upper_left_corner_y <= y <= upper_right_corner_y)
+            (upper_left_corner_x <= x <= upper_right_corner_x)
+            and (upper_left_corner_y <= y <= upper_right_corner_y)
         ):
             if n % 2 == 0 and num < 4:
                 dx, dy = 0, 1
@@ -64,9 +65,13 @@ def spiral_generator(n: int = 2, fn: int = 1) -> Generator[list, None, None]:
                 dx, dy = 1, 0
         elif (y < x) and (upper_right_corner_y <= y <= lower_right_corner_y):
             dx, dy = 0, 1
-        elif n % 2 == 0 and ((lower_left_corner_x < x <= lower_right_corner_x) and (x <= y)):
+        elif n % 2 == 0 and (
+            (lower_left_corner_x < x <= lower_right_corner_x) and (x <= y)
+        ):
             dx, dy = -1, 0
-        elif n % 2 == 1 and ((lower_left_corner_x < x <= lower_right_corner_x) and (x <= y)):
+        elif n % 2 == 1 and (
+            (lower_left_corner_x < x <= lower_right_corner_x) and (x <= y)
+        ):
             dx, dy = -1, 0
         else:
             dx, dy = 0, -1

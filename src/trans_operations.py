@@ -1,20 +1,24 @@
-import re
 import json
-import pandas as pd
-
-from pathlib import Path
+import re
 from collections import Counter
 from operator import itemgetter
+from pathlib import Path
+
+import pandas as pd
+
 from src.read_transactions import read_csv, read_xls
 
 
 def process_bank_search(operations_data: list[dict], state: str) -> list[dict]:
     """функция, принимает список словарей с данными о банковских операциях и строку поиска,
-    и возвращает список словарей, у которых в описании ('description') есть данная строка."""
+    и возвращает список словарей, у которых в описании ('description') есть данная строка.
+    """
 
     pattern = re.compile(state, re.IGNORECASE)
     sel_operations_data = [
-        operation for operation in operations_data if re.search(pattern, str(operation["description"]))
+        operation
+        for operation in operations_data
+        if re.search(pattern, str(operation["description"]))
     ]
 
     return sel_operations_data
@@ -33,7 +37,8 @@ def process_bank_operations(data: list[dict], categories: list) -> dict:
 def source_select(file_name: str) -> tuple[list, list[dict]]:
     """Функция выполняющая основной диалог с пользователем для выбора источника транзакций и вариантов его
     предварительной обработки (сортировка, выборка). Принимает в качестве аргумента путь и имя файла без расширения
-    и возвращает список словарей транзакций, сформированный по требованиям пользователя"""
+    и возвращает список словарей транзакций, сформированный по требованиям пользователя
+    """
 
     answers = []
     current_directory = Path.cwd()
@@ -42,7 +47,7 @@ def source_select(file_name: str) -> tuple[list, list[dict]]:
     elif current_directory.stem == "BankOperations":
         source_dir = "data"
     else:
-        source_dir = "../data/"
+        source_dir = "../data"
     source_file = Path.joinpath(Path(source_dir), file_name)
 
     answers = get_variant()
@@ -72,7 +77,9 @@ def source_select(file_name: str) -> tuple[list, list[dict]]:
             print(f"Ошибка файла: {fn}")
             return answers[1], []
 
-    result_list = [operation for operation in operations_data if operation["state"] in answers[1]]
+    result_list = [
+        operation for operation in operations_data if operation["state"] in answers[1]
+    ]
 
     if answers[3].lower() == "по возрастанию":
         result_list.sort(key=itemgetter("date"))
@@ -80,7 +87,11 @@ def source_select(file_name: str) -> tuple[list, list[dict]]:
         result_list.sort(key=itemgetter("date"), reverse=True)
 
     if answers[4].lower() == "да":
-        result_list_rub = [trans_dict for trans_dict in result_list if trans_dict["currency_code"] == "RUB"]
+        result_list_rub = [
+            trans_dict
+            for trans_dict in result_list
+            if trans_dict["currency_code"] == "RUB"
+        ]
         result_list = result_list_rub
 
     if answers[5].lower() == "да":
@@ -100,26 +111,32 @@ def print_select(result_list: list[dict], state_select: list) -> None:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
     else:
         for operation in result_list:
-            print(f"{pd.to_datetime(operation['date']):%d.%m.%Y} {operation['description']}")
+            print(
+                f"{pd.to_datetime(operation['date']):%d.%m.%Y} {operation['description']}"
+            )
             try:
                 empty_from = len(operation["from"])
             except TypeError:
                 print(f"{mask_source(str(operation['to']))}")
             else:
                 if empty_from > 0:
-                    print(f"{mask_source(str(operation['from']))} -> {mask_source(str(operation['to']))}")
+                    print(
+                        f"{mask_source(str(operation['from']))} -> {mask_source(str(operation['to']))}"
+                    )
                 else:
                     print(f"{mask_source(str(operation['to']))}")
             print(f'Сумма: {int(operation['amount'])} {operation["currency_code"]}\n')
 
-    print(f"Банковские операции по выбранным категориям: {process_bank_operations(result_list, state_select)}")
+    print(
+        f"Банковские операции по выбранным категориям: {process_bank_operations(result_list, state_select)}"
+    )
 
 
 def get_variant() -> list:
     """Функция опроса пользователя и получения параметров обработки транзакций"""
 
     selection = {"1": "JSON-файла", "2": "CSV-файла", "3": "XLSX-файла"}
-    answers = [""] * 7
+    answers = ["", [], "", "", "", "", ""]
     # Диалог с пользователем и заполнение списка answers с ответами для дальнейшей обработки транзакций в source_select
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
     while True:
@@ -131,7 +148,9 @@ def get_variant() -> list:
             if answers[0] in ("q", "quit"):
                 raise SystemExit
             else:
-                print('Вы ошиблись при выборе источника. Повторите ещё раз или нажмите "q" для выхода из программы')
+                print(
+                    'Вы ошиблись при выборе источника. Повторите ещё раз или нажмите "q" для выхода из программы'
+                )
                 continue
         else:
             print(f"Вы выбрали получение информации из {selection[answers[0]]}\n")
@@ -139,7 +158,9 @@ def get_variant() -> list:
     while True:
         all_available = True
         print("\nВведите статус, по которому необходимо выполнить фильтрацию.\n")
-        answer = input("Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING\n>>>")
+        answer = input(
+            "Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING\n>>>"
+        )
         answers[1] = re.split(r"[,\s]+", answer)
         for answer_1 in answers[1]:
             if answer_1.upper() not in ("EXECUTED", "CANCELED", "PENDING"):
@@ -150,17 +171,21 @@ def get_variant() -> list:
     print(f'Операции отфильтрованы по статусу "{answers[1]}"')
 
     answers[2] = input("Отсортировать операции по дате? Да/\033[1;4mНет\033[0m\n>>>")
-    if answers[2].lower() == "да":
+    if answers[2] == "да":
         answers[3] = input(
-            "Отсортировать по возрастанию или по убыванию? \033[1;4mпо возрастанию\033[0m/по " "убыванию\n>>>"
+            "Отсортировать по возрастанию или по убыванию? \033[1;4mпо возрастанию\033[0m/по "
+            "убыванию\n>>>"
         )
 
-    answers[4] = input("Выводить только рублевые транзакции? Да/\033[1;4mНет\033[0m\n>>>")
+    answers[4] = input(
+        "Выводить только рублевые транзакции? Да/\033[1;4mНет\033[0m\n>>>"
+    )
 
     answers[5] = input(
-        "Отфильтровать список транзакций по определенному слову в описании? Да/\033[1;4mНет\033[" "0m\n>>>"
+        "Отфильтровать список транзакций по определенному слову в описании? Да/\033[1;4mНет\033["
+        "0m\n>>>"
     )
-    if answers[5].lower() == "да":
+    if answers[5] == "да":
         answers[6] = input("Введите слово для поиска\n>>>")
 
     return answers
@@ -174,64 +199,9 @@ def mask_source(card_info: str) -> str:
         return ""
     if re.search(r"Счет|Счёт", card_info) is None:
         # str_account = re.search(r'\d{16}',card_info)
-        return re.sub(r"(\d{4})(\d{2})(\d{2})(\d{4})(\d{4})", r"\1 \2** **** \4", card_info)
+        return re.sub(
+            r"(\d{4})(\d{2})(\d{2})(\d{4})(\d{4})", r"\1 \2** **** \4", card_info
+        )
     else:
         # str_account = re.search(r'\d{20}',card_info)
         return re.sub(r"\d{16}", r"**", card_info)
-
-    # first_space_index = card_info.find(" ")
-    # last_space_index = card_info.rfind(" ")
-    #
-    # card_info_number = card_info[last_space_index + 1 :]
-    # len_card_info_number = len(card_info_number)
-    #
-    # if len(card_info) <= 16:  # Некорректные данные - отсутствует наименование или номер карты, или ключевое слово
-    #     # print("Некорректные данные - отсутствует наименование или номер карты, номер счёта, или ключевое слово")
-    #     return ""
-    # if not card_info_number.isdigit():  # Проверка на наличие не цифровых символов в номере
-    #     # print("Некорректные данные - наличие не цифровых символов в номере")
-    #     return ""
-    # is_account = re.search("Счет",card_info)
-    # if is_account is None:
-    #     # Обработка Карты
-    #     if len_card_info_number == 20:
-    #         # print("Некорректные данные - ошибка в ключевом слове")
-    #         return ""
-    #     elif len_card_info_number == 16:
-    #         # print("Корректная карта")
-    #         return f"{card_info[: last_space_index]} {get_mask_card_number(card_info_number)}"
-    #     elif len(card_info_number) > 16:  # Некорректные данные - превышено количество цифр в номере карты
-    #         # print("Некорректные данные - превышено количество цифр в номере карты")
-    #         return ""
-    #     else:
-    #         # Некорректные данные - недостаточно цифр в номере карты
-    #         # print("Некорректные данные - недостаточно цифр в номере карты")
-    #         return ""
-    #
-    # # Обработка Счёта
-    # if card_info[:first_space_index] == "Счет":
-    #     if len_card_info_number == 20:
-    #         # print("Корректный счёт")
-    #         return f"Счет {get_mask_account(card_info_number)}"
-    #     elif len_card_info_number > 20:  # Некорректные данные - превышено количество цифр в счёте
-    #         # print("Некорректные данные - превышено количество цифр в счёте")
-    #         return ""
-    #     else:
-    #         # Некорректные данные - недостаточно цифр в счёте карты или отсутствует счёт карты
-    #         # print("Некорректные данные - недостаточно цифр в счёте или отсутствует счёт")
-    #         return ""
-    # # Обработка Карты
-    # else:
-    #     if len_card_info_number == 20:
-    #         # print("Некорректные данные - ошибка в ключевом слове")
-    #         return ""
-    #     elif len_card_info_number == 16:
-    #         # print("Корректная карта")
-    #         return f"{card_info[: last_space_index]} {get_mask_card_number(card_info_number)}"
-    #     elif len(card_info_number) > 16:  # Некорректные данные - превышено количество цифр в номере карты
-    #         # print("Некорректные данные - превышено количество цифр в номере карты")
-    #         return ""
-    #     else:
-    #         # Некорректные данные - недостаточно цифр в номере карты
-    #         # print("Некорректные данные - недостаточно цифр в номере карты")
-    #         return ""
