@@ -1,25 +1,27 @@
+import pandas as pd
+import json
+import os
+import inspect
+
+from pathlib import Path
 from src.trans_operations import source_select, print_select
+
 
 def main() -> None:
     """Основная функция для вызова вспомогательных модулей взаимодействия с пользователем и вывода в консоль
     результатов выборки транзакций"""
 
-    #source_file = 'data/transactions'
-    source_file = 'data/test_transactions'
-    #source_file = ''
+    source_file = "transactions"
+    # source_file = 'test_transactions'
+    # source_file = ''
 
-# Вызываем функцию выбора файла-источника транзакций
+    # Вызываем функцию выбора файла-источника транзакций
     state_select, result_list = source_select(source_file)
 
-# Вызываем функцию печати выбранных транзакций
+    # Вызываем функцию печати выбранных транзакций
     print_select(result_list, state_select)
 
-
-
 # создание копий (JSON, XLXS) файла CSV
-import pandas as pd
-import json
-
 def convert_file() -> None:
     """Функция конвертирования файлов"""
 

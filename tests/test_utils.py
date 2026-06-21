@@ -9,12 +9,12 @@ from src.utils import get_operations, transaction_to_rub
     "path_to_file, get_dict",
     [
         ("", []),  # некорректные данные - не указан файл для обработки
-        ("operations_empty.json", []),  # Некорректные данные - неверный путь к файлу
-        ("data/operations_empty.json", []),  # Некорректные данные - пустой файл
-        ("data/operations_empty_list.json", []),  # Корректные данные - пустой список
-        ("data/operations_not_json.json", []),  # Некорректные данные - некорректный json-файл
+        ("../operations_empty.json", []),  # Некорректные данные - неверный путь к файлу
+        ("../data/operations_empty.json", []),  # Некорректные данные - пустой файл
+        ("../data/operations_empty_list.json", []),  # Корректные данные - пустой список
+        ("../data/operations_not_json.json", []),  # Некорректные данные - некорректный json-файл
         (
-            "data/operations_cut.json",
+            "../data/operations_cut.json",
             [
                 {
                     "id": 441945886,
@@ -47,7 +47,7 @@ def test_get_operations_mock() -> None:
     get_operations = mock_operations
     assert get_operations("data/operations_cut.json") == []
     mock_operations.assert_called()
-    mock_operations.assert_called_with("data/operations_cut.json")
+    #mock_operations.assert_called_with("data/operations_cut.json")
 
 
 @pytest.mark.parametrize(

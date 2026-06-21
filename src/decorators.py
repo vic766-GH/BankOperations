@@ -19,7 +19,7 @@ def log(filename: str = "cons") -> Any:
             out_unit = "cons"
         else:
             out_unit = "file"
-            log_path = os.path.join(f"{os.getcwd()}\\logs", filename)
+            log_path = os.path.join(f"{os.getcwd()}\\..\\logs", filename)
             if os.path.exists(log_path):
                 open_mode = "a"
             else:

@@ -6,7 +6,7 @@ from src.external_api import convert_currency
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(funcName)s -  %(levelname)s - %(message)s")
-file_path = f"logs/{__name__}.log"
+file_path = f"../logs/{__name__}.log"
 file_handler = logging.FileHandler(file_path, encoding="utf-8", mode="w")
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
