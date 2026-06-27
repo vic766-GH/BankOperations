@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 from functools import wraps
+from pathlib import Path
 from typing import Any, Callable
 
 
@@ -19,7 +20,14 @@ def log(filename: str = "cons") -> Any:
             out_unit = "cons"
         else:
             out_unit = "file"
-            log_path = os.path.join(f"{os.getcwd()}\\logs", filename)
+
+            current_directory = Path.cwd()
+            if current_directory.stem == "BankOperations":
+                source_dir = "logs"
+            else:
+                source_dir = "../logs"
+            log_path = Path.joinpath(Path(source_dir), filename)
+            # log_path = os.path.join(f"{os.getcwd()}\\..\\logs", filename)
             if os.path.exists(log_path):
                 open_mode = "a"
             else:
@@ -40,7 +48,9 @@ def log(filename: str = "cons") -> Any:
             except Exception as err:
                 if out_unit == "file":
                     print("error")
-                    log_file.write(f"{inner(func).__name__} error: {err}. Inputs: {args}\n")
+                    log_file.write(
+                        f"{inner(func).__name__} error: {err}. Inputs: {args}\n"
+                    )
                 else:
                     print(f"{inner(func).__name__} error: {err}. Inputs: {args}")
             else:

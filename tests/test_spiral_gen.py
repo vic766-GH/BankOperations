@@ -13,7 +13,10 @@ from src.spiral_gen import spiral_generator
     ],
 )
 def test_spiral_generator(
-    dimension_of_matrix: int, start_num: int, matrix_gen: list, request: pytest.FixtureRequest
+    dimension_of_matrix: int,
+    start_num: int,
+    matrix_gen: list,
+    request: pytest.FixtureRequest,
 ) -> None:
     if isinstance(matrix_gen, str):
         data_2 = request.getfixturevalue(matrix_gen)

@@ -1,12 +1,16 @@
 from typing import Any, Generator
 
 
-def filter_by_currency(list_of_dicts: list, currency: str) -> Generator[dict, None, None]:
+def filter_by_currency(
+    list_of_dicts: list, currency: str
+) -> Generator[dict, None, None]:
     """Функция принимает на вход список словарей, представляющих транзакции и возвращает итератор,
     который поочередно выдает транзакции, где валюта операции соответствует заданной"""
 
     filtered_list = filter(
-        lambda dict_in_list: dict_in_list["operationAmount"].get("currency").get("code") == currency, list_of_dicts
+        lambda dict_in_list: dict_in_list["operationAmount"].get("currency").get("code")
+        == currency,
+        list_of_dicts,
     )
     for dictionary in filtered_list:
         yield dictionary
@@ -31,6 +35,8 @@ def card_number_generator(first_num: int, last_num: int) -> Generator[str, None,
 
     while i <= last_num:
         string_out = f"{str(i):>016}"
-        string_out = f"{string_out[:4]} {string_out[4:8]} {string_out[8:12]} {string_out[12:]}"
+        string_out = (
+            f"{string_out[:4]} {string_out[4:8]} {string_out[8:12]} {string_out[12:]}"
+        )
         i += 1
         yield string_out
