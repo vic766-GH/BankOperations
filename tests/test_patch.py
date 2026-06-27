@@ -9,7 +9,9 @@ from mypy.types import Any
 
 def get_external_data(item_id: int) -> Any:
     # Эта функция делает реальный сетевой запрос
-    print(f"\nВызов requests.get для {item_id}...")  # Оставим print для демонстрации, что он НЕ выполнится в тесте
+    print(
+        f"\nВызов requests.get для {item_id}..."
+    )  # Оставим print для демонстрации, что он НЕ выполнится в тесте
     response = requests.get(f"https://api.example.com/items/{item_id}")
     if response.status_code == 200:
         return response.json()

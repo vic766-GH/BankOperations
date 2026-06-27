@@ -118,9 +118,12 @@ def test_read_csv_mock1(transactions_fixture: list[dict]) -> None:
     assert read_csv(path_csv_file) == transactions_fixture
 
 
-def test_read_csv_mock2(transactions_fixture: list[dict], csv_stream_fixture: str) -> None:
+def test_read_csv_mock2(
+    transactions_fixture: list[dict], csv_stream_fixture: str
+) -> None:
     """Тестирование функции read_csv() с использованием объекта Mock в качестве контекстного менеджера. Таким образом,
-    мокирукется реальное чтение из файла с последующей нормальной работой объекта csv.DictReader"""
+    мокирукется реальное чтение из файла с последующей нормальной работой объекта csv.DictReader
+    """
 
     with patch("builtins.open", mock_open(read_data=csv_stream_fixture)):
         path_csv_file = "transactions.csv"
